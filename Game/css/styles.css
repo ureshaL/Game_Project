@@ -1,0 +1,85 @@
+body{
+    margin: 0;
+    background-color: #c8e6c9;
+}
+
+#score_div{
+    position: absolute;
+    background-color: blue;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
+    margin: auto;
+    top: 40%;
+    left: 10%;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.wrapper{
+    background-color: black;
+    position: absolute;
+    margin: auto;
+    width: 350px;
+    height: 95%;
+    top: 50px;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+}
+
+.line{
+    width: 15px;
+    height: 200px;
+    background-color: #eeeeee;
+    margin: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+#line1{
+    top: 10px;
+}
+
+#line2{
+    top: 0;
+    bottom: 0;
+}
+
+#line3{
+    bottom: 10px;
+}
+
+
+.car{
+    position: absolute;
+    transform: rotateZ(90deg);
+    height: 50px;
+}
+
+
+#car{
+    position: absolute;
+    transform: rotateZ(270deg);
+    height: 100px;
+    bottom: 10px;
+    right: 35px;
+}
+
+#car1{
+    top: 250px;
+    left: 50px;
+}
+
+#car2{
+    top: 30px;
+    right: 50px;
+}
+
+#car3{
+    top: 30px;
+    left: 50px;
+}
+

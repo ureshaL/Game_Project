@@ -3,8 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Car Game</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
+<div id="score_div">
+    Score : <span id="score">0</span>
+</div>
+
+<div class="wrapper">
+    <img src="image/orange-car-top-view-hi.png" alt="Car-orange" class="car" id="car1">
+    <img src="image/orange-car-top-view-hi.png" alt="Car-orange" class="car" id="car2">
+    <img src="image/orange-car-top-view-hi.png" alt="Car-orange" class="car" id="car3">
+    <img src="image/1828053.png" alt="blueCar" id="car">
+
+
+
+    <div class="line" id="line1"></div>
+    <div class="line" id="line3"></div>
+</div>
+
+<div id="game-over-box">
+    <div style="text-align: center;">
+        <img src="image/gameover-colour-logo2.png" alt="Game Over" style="display: none">
+        <h1 id="score-box">Your Score : <span id="final-score"></span></h1>
+        <img id="btn-replay" src="image/Play_Again_Button.png" alt="Play Again">
+    </div>
+</div>
+
+
+
+
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="controller/index-Controller.js"></script>
 </body>
 </html>
