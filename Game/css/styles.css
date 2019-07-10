@@ -33,9 +33,9 @@ body{
     position: absolute;
     margin: auto;
     width: 350px;
-    height: 95%;
-    top: 50px;
-    bottom: 50px;
+    height: 95vh;
+    top: 15px;
+    /*bottom: 50px;*/
     left: 0;
     right: 0;
     overflow: hidden;
