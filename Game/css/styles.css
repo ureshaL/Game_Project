@@ -65,31 +65,31 @@ body{
 
 .car{
     position: absolute;
-    transform: rotateZ(90deg);
-    height: 50px;
+    transform: rotateZ(270deg);
+    width: 70px;
 }
 
 #car{
     position: absolute;
     transform: rotateZ(270deg);
-    height: 100px;
+    width: 70px;
     bottom: 5%;
     right: 35px;
 }
 
 #car1{
     top: -100px;
-    left: 10%;
+    left: 60%;
 }
 
 #car2{
-    top: -250px;
+    top: -200px;
     right: 40%;
 }
 
 #car3{
     top: -350px;
-    left: 60%;
+    left: 50%;
 }
 
 #game-over-box{

@@ -10,6 +10,9 @@ const line_3 = $('#line3');
 const car_1 = $('#car1');
 const car_2 = $('#car2');
 const car_3 = $('#car3');
+const car_height = $('#car1').height();
+
+var speed = 1;
 
 const my_car = $('#car');
 const my_car_width = $('#car').width();
@@ -99,7 +102,15 @@ function repeat(){
     }
 }
 
-
+function car_down(car){
+    var current_top = parseInt(car.css('top'));
+    if (current_top > gameHeight){
+        current_top = -200;
+        var car_left = parseInt(Math.random() * (gameWidth - my_car_width));
+        car.css('left', car_left);
+    }
+    car.css('top', current_top + speed);
+}
 
 btnPlay.click(function () {
     btnPlay.fadeOut();
