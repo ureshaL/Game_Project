@@ -10,9 +10,9 @@ const line_3 = $('#line3');
 const car_1 = $('#car1');
 const car_2 = $('#car2');
 const car_3 = $('#car3');
-const car_height = $('#car1').height();
+const car_width = $('#car1').width();
 
-var speed = 1;
+var speed = 2;
 
 const my_car = $('#car');
 const my_car_width = $('#car').width();
@@ -27,120 +27,54 @@ let game_over = false;
 let gameHeight = $('.wrapper').height();
 let gameWidth = $('.wrapper').width();
 
-let step = 1;
+const score = $('#score');
+
+let step = 2;
+let score_count = 1;
+let score_div = $('#score_div');
+
+const game_over_box = $('#game-over-box');
 
 // ---------------------------------Game Starts here------------------------------------------------------//
 
-$(document).on('keydown', function (e) {
-    if (game_over === false){
-        var key = e.keyCode;
-        if (key === 37 && move_left === false){
-                move_left = requestAnimationFrame(left);
-        }else if (key === 39 && move_right === false){
-            move_right = requestAnimationFrame(right);
-        }else if (key === 38 && move_up === false){
-            move_up = requestAnimationFrame(up);
-        }else if (key === 40 && move_down === false){
-            move_down = requestAnimationFrame(down);
-        }
-    }
-});
-
-$(document).on('keyup', function (e) {
-    if (game_over === false){
-        var key = e.keyCode;
-        if (key === 37){
-            cancelAnimationFrame(move_left);
-            move_left = false;
-        }else if (key === 39){
-            cancelAnimationFrame(move_right);
-            move_right = false;
-        }else if (key === 38){
-            cancelAnimationFrame(move_up);
-            move_up = false;
-        }else if (key === 40){
-            cancelAnimationFrame(move_down);
-            move_down = false;
-        }
-    }  
-});
-
-function left(){
-    if (game_over === false && parseInt(my_car.css('left')) > 0){
-        my_car.css('left', parseInt(my_car.css('left')) -5);
-        move_left = requestAnimationFrame(left);
-    }
-}
-
-function right(){
-    if (game_over === false && parseInt(my_car.css('left')) < gameWidth - my_car_width){
-        my_car.css('left', parseInt(my_car.css('left')) + 5);
-        move_right = requestAnimationFrame(right);
-    }
-}
-
-function up(){
-    if (game_over === false && parseInt(my_car.css('top')) > 0){
-        my_car.css('top', parseInt(my_car.css('top')) - 5);
-        move_up = requestAnimationFrame(up);
-    }
-}
-
-function down(){
-    if (game_over === false && parseInt(my_car.css('top')) < gameHeight - my_car_height){
-        my_car.css('top', parseInt(my_car.css('top')) + 5);
-        move_down = requestAnimationFrame(down);
-    }
-}
-
-
-function repeat(){
-    if (game_over === false){
-        car_down(car_1);
-        car_down(car_2);
-        car_down(car_3);
-    }
-}
-
-function car_down(car){
-    var current_top = parseInt(car.css('top'));
-    if (current_top > gameHeight){
-        current_top = -200;
-        var car_left = parseInt(Math.random() * (gameWidth - my_car_width));
-        car.css('left', car_left);
-    }
-    car.css('top', current_top + speed);
-}
+let frameId = 0;
+let nextBar = null;
+let isHit = false;
 
 btnPlay.click(function () {
+
     btnPlay.fadeOut();
-    processGame();
+
+    function processGame() {
+        frameId = requestAnimationFrame(function () {
+            moveRoad();
+            appearRandomCars();
+            if (!isHit) {
+                processGame();
+            }
+        });
+    } processGame();
+
+    $(document).keydown(function (e) {
+        const keySpeed = 5;
+        const key = e.key;
+        switch (key) {
+            case 'ArrowLeft':
+                my_car.css('left', parseInt(my_car.css('left')) - keySpeed);
+                break;
+            case 'ArrowRight':
+                my_car.css('left', parseInt(my_car.css('left')) + keySpeed);
+                break;
+            case 'ArrowUp':
+                my_car.css('top', parseInt(my_car.css('top')) - keySpeed);
+                break;
+            case 'ArrowDown':
+                my_car.css('top', parseInt(my_car.css('top')) + keySpeed);
+                break;
+        }
+    });
+
 });
-
-
-function processGame() {
-    moveRoad();
-    repeat();
-    requestAnimationFrame(processGame);
-    requestAnimationFrame(repeat);
-}
-
-// function moveRoad() {
-//     line_down(line_1);
-//     line_down(line_2);
-//     line_down(line_3);
-//
-// }
-//
-// function line_down(line) {
-//     var line_current_top = parseInt(line.css('top'));
-//     if (line_current_top > gameHeight){
-//         line_current_top = -300;
-//     }
-//     line.css('top',line_current_top + line_speed);
-// }
-
-let nextBar = null;
 
 function moveRoad() {
     const line_1_top = parseInt(line_1.css('top'));
@@ -177,3 +111,52 @@ function moveRoad() {
         nextBar.css('top', resetPos);
     }
 }
+
+function appearRandomCars(){
+    car_down(car_1);
+    car_down(car_2);
+    car_down(car_3);
+}
+
+function car_down(car){
+    var current_top = parseInt(car.css('top'));
+    if (current_top > gameHeight){
+        current_top = -200;
+        var car_left = parseInt(Math.random() * (gameWidth - my_car_width));
+        car.css('left', car_left);
+    }
+    car.css('top', current_top + speed);
+
+    if (isCollide(car[0], my_car[0])) {
+        isHit = true;
+        cancelAnimationFrame(frameId);
+        $(document).off('keydown');
+    }
+}
+
+function isCollide(a, b) {
+    return !(
+        ((a.y + a.height) < (b.y)) ||
+        (a.y > (b.y + b.height)) ||
+        ((a.x + a.width) < b.x) ||
+        (a.x > (b.x + b.width))
+    );
+}
+
+// function isCollide($div1, $div2) {
+//     var x1 = $div1.offset().left;
+//     var y1 = $div1.offset().top;
+//     var h1 = $div1.outerHeight(true);
+//     var w1 = $div1.outerWidth(true);
+//     var b1 = y1 + h1;
+//     var r1 = x1 + w1;
+//     var x2 = $div2.offset().left;
+//     var y2 = $div2.offset().top;
+//     var h2 = $div2.outerHeight(true);
+//     var w2 = $div2.outerWidth(true);
+//     var b2 = y2 + h2;
+//     var r2 = x2 + w2;
+//
+//     if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) return false;
+//     return true;
+// }
