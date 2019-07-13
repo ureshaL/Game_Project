@@ -103,16 +103,13 @@ body{
     position: absolute;
     transform: rotateZ(180deg);
     width: 37px;
-    border: 2px white solid;
 }
 
 #car{
     position: absolute;
-    transform: rotateZ(270deg);
-    width: 75px;
+    /*transform: rotateZ(270deg);*/
+    width: 37px;
     bottom: 5%;
-    /*right: 35px;*/
-    border: 2px white solid;
 }
 
 #car1{
