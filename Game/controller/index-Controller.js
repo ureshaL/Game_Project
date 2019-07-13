@@ -29,7 +29,8 @@ let gameWidth = $('.wrapper').width();
 
 const score = $('#score');
 
-let step = 5;
+let stepY = 5;
+let stepX = 3;
 let score_count = 1;
 let score_div = $('#score_div');
 
@@ -94,23 +95,31 @@ btnPlay.click(function () {
     });
 
     function left() {
-        my_car.css('left', parseInt(my_car.css('left')) - step);
-        move_left = requestAnimationFrame(left);
+        if (parseInt(my_car.css('left')) > 0) {
+            my_car.css('left', parseInt(my_car.css('left')) - stepX);
+            move_left = requestAnimationFrame(left);
+        }
     }
 
     function right() {
-        my_car.css('left', parseInt(my_car.css('left')) + step);
-        move_right = requestAnimationFrame(right);
+        if (parseInt(my_car.css('left')) < gameWidth - my_car_width) {
+            my_car.css('left', parseInt(my_car.css('left')) + stepX);
+            move_right = requestAnimationFrame(right);
+        }
     }
 
     function up() {
-        my_car.css('top', parseInt(my_car.css('top')) - step);
-        move_up = requestAnimationFrame(up);
+        if (parseInt(my_car.css('top')) > 0) {
+            my_car.css('top', parseInt(my_car.css('top')) - stepY);
+            move_up = requestAnimationFrame(up);
+        }
     }
 
     function down() {
-        my_car.css('top', parseInt(my_car.css('top')) + step);
-        move_down = requestAnimationFrame(down);
+        if (parseInt(my_car.css('top')) < gameHeight - my_car_height) {
+            my_car.css('top', parseInt(my_car.css('top')) + stepY);
+            move_down = requestAnimationFrame(down);
+        }
     }
 
 });
@@ -125,19 +134,19 @@ function moveRoad() {
     if (line_1_top >= gameHeight) {
         nextBar = line_1;
     }else {
-        line_1.css('top', line_1_top + step);
+        line_1.css('top', line_1_top + stepY);
     }
 
     if (line_2_top >= gameHeight) {
         nextBar = line_2;
     } else {
-        line_2.css('top', line_2_top + step);
+        line_2.css('top', line_2_top + stepY);
     }
 
     if (line_3_top >= gameHeight) {
         nextBar = line_3;
     } else {
-        line_3.css('top', line_3_top + step);
+        line_3.css('top', line_3_top + stepY);
     }
 
     if (line_3_top === gap && nextBar !== null) {
@@ -159,22 +168,16 @@ function appearRandomCars(){
 
 function car_down(car){
     var current_top = parseInt(car.css('top'));
+    let top_rand = 0;
     if (current_top > gameHeight){
         current_top = -200;
         var car_left = parseInt(Math.random() * (gameWidth - my_car_width));
+        top_rand = Math.floor(Math.random() * 100);
+        console.log(top_rand);
         car.css('left', car_left);
     }
-    car.css('top', current_top + speed);
+    car.css('top', current_top + speed - top_rand);
 }
-
-// function isCollide(a, b) {
-//     return !(
-//         ((a.y + a.height) < (b.y)) ||
-//         (a.y > (b.y + b.height)) ||
-//         ((a.x + a.width) < b.x) ||
-//         (a.x > (b.x + b.width))
-//     );
-// }
 
 function isCollide($div1, $div2) {
     var x1 = $div1.offset().left;
@@ -190,6 +193,5 @@ function isCollide($div1, $div2) {
     var b2 = y2 + h2;
     var r2 = x2 + w2;
 
-    if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) return false;
-    return true;
+    return !(b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2);
 }

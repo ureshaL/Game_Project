@@ -1,14 +1,20 @@
 body{
+    --car-width: 50px;
+
     margin: 0;
+    background: url("../image/1e.png");
     background-size: cover;
-    background: url("../image/1e.png") no-repeat;
+    background-repeat: no-repeat;
     height: 100vh;
 }
 
 #score_div{
     position: absolute;
     background-color: white;
-    padding: 10px 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
     margin: auto;
     top: 40%;
     left: 10%;
@@ -95,26 +101,27 @@ body{
 .car{
     position: absolute;
     transform: rotateZ(180deg);
-    width: 37px;
+    width: var(--car-width);
 }
 
 #car{
     position: absolute;
-    width: 37px;
+    width: var(--car-width);
     bottom: 5%;
+    right: 50px;
 }
 
 #car1{
-    top: -100px;
+    top: -110px;
     left: 60%;
 }
 
 #car2{
-    top: -250px;
+    top: -310px;
 }
 
 #car3{
-    top: -350px;
+    top: -410px;
     left: 50%;
 }
 
