@@ -23,11 +23,11 @@ var move_down = false;
 var move_left = false;
 var move_right = false;
 
-let game_over = false;
 let gameHeight = $('.wrapper').height();
 let gameWidth = $('.wrapper').width();
 
 const score = $('#score');
+let score_interval;
 
 let stepY = 5;
 let stepX = 3;
@@ -35,6 +35,9 @@ let score_count = 1;
 let score_div = $('#score_div');
 
 const game_over_box = $('#game-over-box');
+const final_score = $('#final-score');
+
+const btnplay_again = $('#btn-replay');
 
 let frameId = 0;
 let nextBar = null;
@@ -42,16 +45,20 @@ let isHit = false;
 
 // ---------------------------------Game Starts here------------------------------------------------------//
 
-
+btnplay_again.click(function () {
+    window.location.reload();
+});
 
 btnPlay.click(function () {
 
-    btnPlay.fadeOut();
+    $('#btn-play').fadeOut();
     score_div.fadeIn();
+    countScore();
 
     function processGame() {
         frameId = requestAnimationFrame(function () {
             moveRoad();
+            countScore();
             appearRandomCars();
             if (isCollide(my_car, car_1) || isCollide(my_car, car_2) || isCollide(my_car, car_3)) {
                 isHit = true;
@@ -60,6 +67,11 @@ btnPlay.click(function () {
             }
             if (!isHit) {
                 processGame();
+            }else {
+                $('.wrapper').css('filter', 'brightness(40%)');
+                game_over_box.fadeIn();
+                score_div.fadeOut();
+                final_score.text(score.text());
             }
         });
     } processGame();
@@ -173,7 +185,6 @@ function car_down(car){
         current_top = -200;
         var car_left = parseInt(Math.random() * (gameWidth - my_car_width));
         top_rand = Math.floor(Math.random() * 100);
-        console.log(top_rand);
         car.css('left', car_left);
     }
     car.css('top', current_top + speed - top_rand);
@@ -194,4 +205,16 @@ function isCollide($div1, $div2) {
     var r2 = x2 + w2;
 
     return !(b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2);
+}
+
+function countScore() {
+    score_count++;
+
+    if (score_count % 20 == 0) {
+        score.text(parseInt(score.text()) + 1);
+    }
+    if (score_count % 500 == 0) {
+        speed++;
+    }
+
 }

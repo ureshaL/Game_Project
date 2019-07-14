@@ -143,9 +143,14 @@ body{
 
 #btn-replay {
     margin-top: 35px;
+    cursor: pointer;
 }
 
 #final-score{
     color: red;
 }
 
+#play {
+    padding-top: 3%;
+    cursor: pointer;
+}
