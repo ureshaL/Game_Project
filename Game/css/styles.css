@@ -135,7 +135,7 @@ body{
     overflow: hidden;
 }
 
-#score-box {
+.score-box {
     color: white;
     margin-top: 25px;
     text-shadow: 1px 1px 3px black;
@@ -148,6 +148,10 @@ body{
 
 #final-score{
     color: red;
+}
+
+#High-score{
+    color: blue;
 }
 
 #play {

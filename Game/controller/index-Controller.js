@@ -36,6 +36,7 @@ let score_div = $('#score_div');
 
 const game_over_box = $('#game-over-box');
 const final_score = $('#final-score');
+const high_score = $('#High-score');
 
 const btnplay_again = $('#btn-replay');
 
@@ -72,6 +73,7 @@ btnPlay.click(function () {
                 game_over_box.fadeIn();
                 score_div.fadeOut();
                 final_score.text(score.text());
+                setHighScore(score.text());
             }
         });
     } processGame();
@@ -217,4 +219,12 @@ function countScore() {
         speed++;
     }
 
+}
+
+function setHighScore(score) {
+    let highScore = parseInt(localStorage.getItem('high_score')) || 0;
+    if (parseInt(score) > highScore){
+        localStorage.setItem('high_score', score);
+    }
+    high_score.text(localStorage.getItem('high_score'));
 }
